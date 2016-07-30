@@ -10,8 +10,7 @@ import java.util.Map;
 
 /**
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
- * <p/>
- * Date added 1/5/15
+ * @since 01 May 2015
  */
 public class ShuntingYard {
 

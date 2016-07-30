@@ -1,14 +1,10 @@
 package com.ceco.algorithms.unionfind;
 
 
-import com.ceco.algorithms.unionfind.WeightedQuickUnion;
-
 /**
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
- * </p>
- * Date added 9/6/14
+ * @since 6 Sep 2014
  */
-
 public class Percolation {
 
     private static final int ADDITIONAL_VIRTUAL_SITES = 2;
@@ -41,14 +37,15 @@ public class Percolation {
      */
     public Percolation(int N) {
         this.N = N;
-        openSites = new boolean[N*N];
-        grid = new WeightedQuickUnion(N*N + ADDITIONAL_VIRTUAL_SITES);
+        openSites = new boolean[N * N];
+        grid = new WeightedQuickUnion(N * N + ADDITIONAL_VIRTUAL_SITES);
         virtualTop = getSiteIndex(N, N) + 1;
         virtualBottom = getSiteIndex(N, N) + 2;
     }
 
     /**
      * Create indexes for the sites using their position in the grid.
+     *
      * @param row
      * @param col
      * @return site index
@@ -63,6 +60,7 @@ public class Percolation {
 
     /**
      * Open site if it is not already opened.
+     *
      * @param i row
      * @param j col
      */
@@ -107,6 +105,7 @@ public class Percolation {
 
     /**
      * Is site open?
+     *
      * @param i row
      * @param j column
      */
@@ -117,6 +116,7 @@ public class Percolation {
     /**
      * Is site full?
      * "Full" means the site is open and it is connected to the virtual top site!
+     *
      * @param i row
      * @param j column
      */

@@ -6,8 +6,7 @@ import java.util.NoSuchElementException;
 
 /**
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
- * <p/>
- * Date added: 2015-02-13
+ * @since 13 Feb 2015
  */
 public class LinkedList<T> implements List<T> {
 
@@ -24,7 +23,6 @@ public class LinkedList<T> implements List<T> {
             this.next = next;
             this.previous = previous;
         }
-
     }
 
     private Node first;
@@ -43,25 +41,45 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean add(T item) {
+        // get reference to the lastly added node
         Node l = last;
+
+        // create the new node
         Node newNode = new Node(item, null, l);
+
+        // assign it as the new lastly added node
         last = newNode;
+
+        // if there is no lastly added node -> that is our first added node
+        // otherwise we assign the new node to the next reference of the
+        // lastly added one
         if (l == null) {
             first = newNode;
         } else {
             l.next = newNode;
         }
+
+        // increment size of list
         size++;
+
         return true;
     }
 
     @Override
     public boolean remove(T item) {
+        // iterate list by following next references
         for (Node n = first; n != null; n = n.next) {
             if (item.equals(n.item)) {
+                // get prev ref of node marked for removal
                 Node prev = n.previous;
+
+                // get next ref of node marked for removal
                 Node next = n.next;
 
+                // if there is no prev ref than that is the first node of the list
+                // otherwise we bypass the node marked for removal by assigning
+                // the next ref of prev to the next ref of the node marked for removal
+                // and delete its reference to the previous element
                 if (prev == null) {
                     first = next;
                 } else {
@@ -69,6 +87,10 @@ public class LinkedList<T> implements List<T> {
                     n.previous = null;
                 }
 
+                // if there is no next ref than that is the last element of the list
+                // otherwise we bypass the node marked for removal by assigning
+                // the prev ref of next to the prev ref of the node marked for removal
+                // and delete its reference to the next element
                 if (next == null) {
                     last = prev;
                 } else {
@@ -76,7 +98,10 @@ public class LinkedList<T> implements List<T> {
                     n.next = null;
                 }
 
+                // delete node content
                 n.item = null;
+
+                // decrement list size
                 size--;
 
                 return true;
@@ -87,14 +112,26 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public void addFirst(T item) {
+        // get reference to the firstly added node
         Node f = first;
+
+        // create the new node
         Node newNode = new Node(item, f, null);
+
+        // assign it as the new firstly added node
         first = newNode;
+
+        // if there was no node added before this one
+        // than now that is going to be our lastly added node
+        // otherwise we simply position it as the previous ref
+        // of the first node so that it can become the new first node
         if (f == null) {
             last = newNode;
         } else {
             f.previous = newNode;
         }
+
+        // increment the size of the list
         size++;
     }
 

@@ -2,8 +2,7 @@ package com.ceco.algorithms.sorting;
 
 /**
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
- *         <p/>
- *         Date added: 2015-03-03
+ * @since 03 March 2015
  */
 public class SelectionSort<T> extends AbstractSort<T>{
 

@@ -7,8 +7,7 @@ package com.ceco.algorithms.unionfind;
  * and children. Two sites share the same component if they have the same tree root.
  *
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
- * <p/>
- * Date added: 2015-02-10
+ * @since 10 Feb 2015
  */
 public class QuickUnion implements UnionFind<Integer> {
 
@@ -17,12 +16,12 @@ public class QuickUnion implements UnionFind<Integer> {
      */
     private Integer[] id;
 
-	public QuickUnion(int count) {
-		this.id = new Integer[count];
+    public QuickUnion(int count) {
+        this.id = new Integer[count];
         for (int i = 0; i < id.length; i++) {
             id[i] = i;
         }
-	}
+    }
 
     @Override
     public void union(Integer p, Integer q) {

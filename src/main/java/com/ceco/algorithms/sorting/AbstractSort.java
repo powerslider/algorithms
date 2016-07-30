@@ -2,8 +2,7 @@ package com.ceco.algorithms.sorting;
 
 /**
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
- *         <p/>
- *         Date added: 2015-03-03
+ * @since 03 March 2015
  */
 public abstract class AbstractSort<T> implements Sortable<T> {
 
@@ -31,8 +30,8 @@ public abstract class AbstractSort<T> implements Sortable<T> {
     }
 
     public void show(T[] arr) {
-        for (int i = 0; i < arr.length ; i++) {
-            System.out.println(arr[i]);
+        for (T elem : arr) {
+            System.out.println(elem);
         }
     }
 

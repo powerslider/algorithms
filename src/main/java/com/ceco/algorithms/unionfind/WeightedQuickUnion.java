@@ -6,8 +6,7 @@ package com.ceco.algorithms.unionfind;
  * the smaller tree's root points to the larger one.
  *
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
- * <p/>
- * Date added: 2015-02-10
+ * @since 10 Feb 2015
  */
 public class WeightedQuickUnion implements UnionFind<Integer> {
 
@@ -21,34 +20,34 @@ public class WeightedQuickUnion implements UnionFind<Integer> {
      * to avoid having an imbalanced tree for performance purposes.
      */
     private int[] sz;
-	
-	public WeightedQuickUnion(int count) {
-		this.id = new Integer[count];
-		this.sz = new int[count];
-		for (int i = 0; i < id.length; i++) {
-			//set each node id with the index number
+
+    public WeightedQuickUnion(int count) {
+        this.id = new Integer[count];
+        this.sz = new int[count];
+        for (int i = 0; i < id.length; i++) {
+            //set each node id with the index number
             id[i] = i;
 
             //set size of neighbours to 1 for each tree node
-			sz[i] = 1;
-		}
-	}
+            sz[i] = 1;
+        }
+    }
 
     @Override
     public void union(Integer p, Integer q) {
         int rootP = find(p);
-		int rootQ = find(q);
+        int rootQ = find(q);
 
         if (rootP == rootQ) return;
 
         //Make smaller root point to larger one
         if (sz[rootP] < sz[rootQ]) {
             id[rootP] = rootQ;
-			sz[rootQ] += sz[rootP];
-		} else {
+            sz[rootQ] += sz[rootP];
+        } else {
             id[rootQ] = rootP;
-			sz[rootP] += sz[rootQ];
-		}
+            sz[rootP] += sz[rootQ];
+        }
     }
 
     @Override
