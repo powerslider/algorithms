@@ -104,10 +104,29 @@ public class SimpleArithmetics {
 
         int dashesCount = longest(firstOperandStr, secondOperandStr, resultStr);
 
+        int firstOperandLength = firstOperandStr.length();
+        int secondOperandLength = secondOperandStr.length();
+
+        int diff = Math.abs(firstOperandLength - secondOperandLength);
+
+        if (firstOperandLength > secondOperandLength) {
+            joiner
+                    .add(firstOperandStr)
+                    .add(whitespaces(diff - 1) + operator + secondOperandStr);
+        } else if (firstOperandLength == secondOperandLength) {
+            joiner
+                    .add(" " + firstOperandStr)
+                    .add(operator + secondOperandStr);
+        } else {
+            joiner
+                    .add(whitespaces(diff + 1) + firstOperandStr)
+                    .add(operator + secondOperandStr);
+        }
+
+        int longestOperand = Math.max(firstOperandLength, secondOperandLength);
+        resultStr = longestOperand == resultStr.length() ? " " + resultStr : resultStr;
         joiner
-                .add(firstOperandStr)
-                .add(operator + secondOperandStr)
-                .add(generate(dashesCount + 1, "-"))
+                .add(dashes(dashesCount + 1))
                 .add(resultStr + "\n");
 
         return joiner.toString();
