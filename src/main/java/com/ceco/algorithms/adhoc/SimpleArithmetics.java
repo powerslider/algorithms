@@ -11,12 +11,12 @@ import java.util.regex.Pattern;
  */
 public class SimpleArithmetics {
 
-    static final Pattern ARITH_EXPR_PATTERN = Pattern.compile("(\\d+)([\\+\\-\\*])(\\d+)");
+    private static final Pattern ARITH_EXPR_PATTERN = Pattern.compile("(\\d+)([\\+\\-\\*])(\\d+)");
 
-    private static String dashes(int dashesCount) {
+    private static String generate(int count, String unit) {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < dashesCount; i++) {
-            builder.append("-");
+        for (int i = 0; i < count; i++) {
+            builder.append(unit);
         }
         return builder.toString();
     }
@@ -45,10 +45,21 @@ public class SimpleArithmetics {
                 int secondOperand = Integer.parseInt(secondOperandStr);
 
                 if (operator.equals("*")) {
-                    while (secondOperand != 0) {
-                        int newSecondOperand = secondOperand;
+                    int diff = secondOperandStr.length() - firstOperandStr.length();
+                    int paddingCount = diff > 0
+                            ? secondOperandStr.length() + 1 - secondOperandStr.length() / 2
+                            : firstOperandStr.length() + 1 - firstOperandStr.length() / 2;
+
+                    joiner
+                            .add(generate(paddingCount, " ") +  firstOperandStr)
+                            .add(generate(paddingCount - diff, " ") + operator + secondOperandStr)
+                            .add(generate(secondOperandStr.length() + 1, " "));
+
+                    int newSecondOperand = secondOperand;
+                    while (newSecondOperand != 0) {
                         int currentDigit = newSecondOperand % 10;
-                        
+                        int currentResult = currentDigit * firstOperand;
+
                         newSecondOperand /= 10;
                     }
 
@@ -71,10 +82,10 @@ public class SimpleArithmetics {
                     joiner
                             .add(firstOperandStr)
                             .add(operator + secondOperandStr)
-                            .add(dashes(dashesCount + 1))
+                            .add(generate(dashesCount + 1, "-"))
                             .add(resultStr + "\n");
-                    System.out.println(joiner.toString());
                 }
+                System.out.println(joiner.toString());
             }
 
         }
