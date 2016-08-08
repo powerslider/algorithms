@@ -124,7 +124,7 @@ public class SimpleArithmetics {
         }
 
         int longestOperand = Math.max(firstOperandLength, secondOperandLength);
-        resultStr = longestOperand == resultStr.length() ? " " + resultStr : resultStr;
+        resultStr = (longestOperand == resultStr.length()) ? (" " + resultStr) : resultStr;
         joiner
                 .add(dashes(dashesCount + 1))
                 .add(resultStr + "\n");
@@ -132,41 +132,38 @@ public class SimpleArithmetics {
         return joiner.toString();
     }
 
-    private static String singleDigitCase(String firstOperandStr,
-                                          String secondOperandStr,
-                                          String operator) {
+    private static String singleDigitCase(String firstOperandStr, String secondOperandStr, String operator) {
         StringJoiner joiner = new StringJoiner("\n");
 
         int firstOperandLength = firstOperandStr.length();
         int secondOperandLength = secondOperandStr.length();
 
         String singleDigitOperationStr = "";
+        int firstOperand = Integer.parseInt(firstOperandStr);
+        int secondOperand = Integer.parseInt(secondOperandStr);
         switch (operator) {
             case "+":
-                singleDigitOperationStr = String.valueOf(
-                        Integer.parseInt(firstOperandStr) + Integer.parseInt(secondOperandStr));
+                singleDigitOperationStr = String.valueOf(firstOperand + secondOperand);
                 break;
             case "-":
-                singleDigitOperationStr = String.valueOf(
-                        Integer.parseInt(firstOperandStr) - Integer.parseInt(secondOperandStr));
+                singleDigitOperationStr = String.valueOf(firstOperand - secondOperand);
                 break;
             case "*":
-                singleDigitOperationStr = String.valueOf(
-                        Integer.parseInt(firstOperandStr) * Integer.parseInt(secondOperandStr));
+                singleDigitOperationStr = String.valueOf(firstOperand * secondOperand);
                 break;
         }
 
-        int singleDigitMultNumLength = singleDigitOperationStr.length();
+        int singleDigitOperationNumLength = singleDigitOperationStr.length();
         int longestLength = 0;
         if (firstOperandLength == 1) {
-            longestLength = Math.max(secondOperandLength, singleDigitMultNumLength);
+            longestLength = Math.max(secondOperandLength, singleDigitOperationNumLength);
             joiner
                     .add(whitespaces(longestLength) + firstOperandStr)
-                    .add(whitespaces(Math.abs(secondOperandLength - singleDigitMultNumLength)) + operator + secondOperandStr);
+                    .add(whitespaces(Math.abs(secondOperandLength - singleDigitOperationNumLength)) + operator + secondOperandStr);
         } else if (secondOperandLength == 1) {
-            longestLength = Math.max(firstOperandLength, singleDigitMultNumLength);
+            longestLength = Math.max(firstOperandLength, singleDigitOperationNumLength);
             joiner
-                    .add(whitespaces(Math.abs(firstOperandLength - singleDigitMultNumLength)) + firstOperandStr)
+                    .add(whitespaces(Math.abs(firstOperandLength - singleDigitOperationNumLength)) + firstOperandStr)
                     .add(whitespaces(longestLength - 2) + operator + secondOperandStr);
         }
 
