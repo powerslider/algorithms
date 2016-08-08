@@ -13,14 +13,6 @@ public class SimpleArithmetics {
 
     private static final Pattern ARITH_EXPR_PATTERN = Pattern.compile("(\\d+)([\\+\\-\\*])(\\d+)");
 
-    private static String generate(int count, String unit) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            builder.append(unit);
-        }
-        return builder.toString();
-    }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int numExpr = scanner.nextInt();
@@ -32,62 +24,159 @@ public class SimpleArithmetics {
         }
 
         for (String expr : exprArr) {
-            StringJoiner joiner = new StringJoiner("\n");
-
             Matcher matcher = ARITH_EXPR_PATTERN.matcher(expr);
             if (matcher.find()) {
                 String firstOperandStr = matcher.group(1);
-                int firstOperand = Integer.parseInt(firstOperandStr);
-
                 String operator = matcher.group(2);
-
                 String secondOperandStr = matcher.group(3);
-                int secondOperand = Integer.parseInt(secondOperandStr);
 
-                if (operator.equals("*")) {
-                    int diff = secondOperandStr.length() - firstOperandStr.length();
-                    int paddingCount = diff > 0
-                            ? secondOperandStr.length() + 1 - secondOperandStr.length() / 2
-                            : firstOperandStr.length() + 1 - firstOperandStr.length() / 2;
-
-                    joiner
-                            .add(generate(paddingCount, " ") +  firstOperandStr)
-                            .add(generate(paddingCount - diff, " ") + operator + secondOperandStr)
-                            .add(generate(secondOperandStr.length() + 1, " "));
-
-                    int newSecondOperand = secondOperand;
-                    while (newSecondOperand != 0) {
-                        int currentDigit = newSecondOperand % 10;
-                        int currentResult = currentDigit * firstOperand;
-
-                        newSecondOperand /= 10;
-                    }
-
+                String newExpr;
+                if (firstOperandStr.length() == 1 || secondOperandStr.length() == 1) {
+                    newExpr = singleDigitCase(firstOperandStr, secondOperandStr, operator);
+                } else if (operator.equals("*")) {
+                    newExpr = multiplication(firstOperandStr, secondOperandStr, operator);
                 } else {
-                    int result = 0;
-                    switch (operator) {
-                        case "+":
-                            result = firstOperand + secondOperand;
-                            break;
-                        case "-":
-                            result = firstOperand - secondOperand;
-                            break;
-                    }
-                    String resultStr = String.valueOf(result);
-
-                    int longestOperand = Math.max(
-                            firstOperandStr.length(), secondOperandStr.length());
-                    int dashesCount = Math.max(resultStr.length(), longestOperand);
-
-                    joiner
-                            .add(firstOperandStr)
-                            .add(operator + secondOperandStr)
-                            .add(generate(dashesCount + 1, "-"))
-                            .add(resultStr + "\n");
+                    newExpr = additionOrSubtraction(firstOperandStr, secondOperandStr, operator);
                 }
-                System.out.println(joiner.toString());
+                System.out.println(newExpr);
             }
-
         }
+    }
+
+    private static String multiplication(String firstOperandStr, String secondOperandStr, String operator) {
+        StringJoiner joiner = new StringJoiner("\n");
+
+        int firstOperand = Integer.parseInt(firstOperandStr);
+        int secondOperand = Integer.parseInt(secondOperandStr);
+
+        int secondOperandLength = secondOperandStr.length();
+        int firstOperandLength = firstOperandStr.length();
+
+        int diff = secondOperandLength - firstOperandLength;
+
+        int paddingCount = diff > 0
+                ? secondOperandLength + 1 - secondOperandLength / 2
+                : firstOperandLength + 1 - firstOperandLength / 2;
+
+        joiner
+                .add(whitespaces(paddingCount + 1) + firstOperandStr)
+                .add(whitespaces(paddingCount - diff) + operator + secondOperandStr);
+
+        int newSecondOperand = secondOperand;
+        String currentResultStr = null;
+        for (int i = 0; newSecondOperand != 0; i++) {
+            int currentDigit = newSecondOperand % 10;
+            int currentResult = currentDigit * firstOperand;
+            currentResultStr = String.valueOf(currentResult);
+            if (i == 0) {
+                int dashesCount = longest(
+                        firstOperandStr,
+                        secondOperandStr,
+                        currentResultStr);
+                joiner.add(whitespaces(paddingCount - diff) + dashes(dashesCount + 1));
+                diff--;
+            }
+            joiner.add(whitespaces(paddingCount - (diff++)) + currentResult);
+
+            newSecondOperand /= 10;
+        }
+
+        int secondDashesCount = currentResultStr.length() + currentResultStr.length() / 2 + 1;
+        joiner.add(dashes(secondDashesCount));
+
+        return joiner.toString();
+    }
+
+    private static String additionOrSubtraction(String firstOperandStr, String secondOperandStr, String operator) {
+        StringJoiner joiner = new StringJoiner("\n");
+        int result = 0;
+        int firstOperand = Integer.parseInt(firstOperandStr);
+        int secondOperand = Integer.parseInt(secondOperandStr);
+        switch (operator) {
+            case "+":
+                result = firstOperand + secondOperand;
+                break;
+            case "-":
+                result = firstOperand - secondOperand;
+                break;
+        }
+        String resultStr = String.valueOf(result);
+
+        int dashesCount = longest(firstOperandStr, secondOperandStr, resultStr);
+
+        joiner
+                .add(firstOperandStr)
+                .add(operator + secondOperandStr)
+                .add(generate(dashesCount + 1, "-"))
+                .add(resultStr + "\n");
+
+        return joiner.toString();
+    }
+
+    private static String singleDigitCase(String firstOperandStr,
+                                          String secondOperandStr,
+                                          String operator) {
+        StringJoiner joiner = new StringJoiner("\n");
+
+        int firstOperandLength = firstOperandStr.length();
+        int secondOperandLength = secondOperandStr.length();
+
+        String singleDigitOperationStr = "";
+        switch (operator) {
+            case "+":
+                singleDigitOperationStr = String.valueOf(
+                        Integer.parseInt(firstOperandStr) + Integer.parseInt(secondOperandStr));
+                break;
+            case "-":
+                singleDigitOperationStr = String.valueOf(
+                        Integer.parseInt(firstOperandStr) - Integer.parseInt(secondOperandStr));
+                break;
+            case "*":
+                singleDigitOperationStr = String.valueOf(
+                        Integer.parseInt(firstOperandStr) * Integer.parseInt(secondOperandStr));
+                break;
+        }
+
+        int singleDigitMultNumLength = singleDigitOperationStr.length();
+        int longestLength = 0;
+        if (firstOperandLength == 1) {
+            longestLength = Math.max(secondOperandLength, singleDigitMultNumLength);
+            joiner
+                    .add(whitespaces(longestLength) + firstOperandStr)
+                    .add(whitespaces(Math.abs(secondOperandLength - singleDigitMultNumLength)) + operator + secondOperandStr);
+        } else if (secondOperandLength == 1) {
+            longestLength = Math.max(firstOperandLength, singleDigitMultNumLength);
+            joiner
+                    .add(whitespaces(Math.abs(firstOperandLength - singleDigitMultNumLength)) + firstOperandStr)
+                    .add(whitespaces(longestLength - 2) + operator + secondOperandStr);
+        }
+
+        joiner
+                .add(dashes(longestLength))
+                .add(singleDigitOperationStr + "\n");
+
+        return joiner.toString();
+    }
+
+    private static String whitespaces(int count) {
+        return generate(count, " ");
+    }
+
+    private static String dashes(int count) {
+        return generate(count, "-");
+    }
+
+    private static String generate(int count, String unit) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            builder.append(unit);
+        }
+        return builder.toString();
+    }
+
+    private static int longest(String firstOperandStr, String secondOperandStr, String resultStr) {
+        int longestOperand = Math.max(
+                firstOperandStr.length(), secondOperandStr.length());
+        return Math.max(resultStr.length(), longestOperand);
     }
 }
