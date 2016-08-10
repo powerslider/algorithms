@@ -6,6 +6,43 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * @see <a href="http://www.spoj.com/problems/ARITH/">
+ *          http://www.spoj.com/problems/ARITH/
+ *      </a>
+ *
+ * Example input:
+ * 4
+ * 12345+67890
+ * 324-111
+ * 325*4405
+ * 1234*4
+ *
+ * Output:
+ *  12345
+ * +67890
+ * ------
+ *  80235
+ *
+ *  324
+ * -111
+ * ----
+ *  213
+ *
+ *     325
+ *   *4405
+ *   -----
+ *    1625
+ *      0
+ *  1300
+ * 1300
+ * -------
+ * 1431625
+ *
+ * 1234
+ *   *4
+ * ----
+ * 4936
+ *
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
  * @since 07-Aug-2016
  */
@@ -67,22 +104,31 @@ public class SimpleArithmetics {
         for (int i = 0; newSecondOperand != 0; i++) {
             int currentDigit = newSecondOperand % 10;
             int currentResult = currentDigit * firstOperand;
+            String oldCurrentResultStr = currentResultStr;
             currentResultStr = String.valueOf(currentResult);
             if (i == 0) {
-                int dashesCount = longest(
-                        firstOperandStr,
-                        secondOperandStr,
-                        currentResultStr);
+                int dashesCount = longest(firstOperandStr, secondOperandStr, currentResultStr);
                 joiner.add(whitespaces(paddingCount - diff) + dashes(dashesCount + 1));
                 diff--;
             }
-            joiner.add(whitespaces(paddingCount - (diff++)) + currentResult);
+
+            int intermediateResultPadding = (diff++);
+            if (oldCurrentResultStr != null) {
+                int currentResultDiff = oldCurrentResultStr.length() - currentResultStr.length();
+                if (currentResultDiff > 0) {
+                    intermediateResultPadding -= currentResultDiff;
+                }
+            }
+            joiner.add(whitespaces(paddingCount - intermediateResultPadding) + currentResult);
 
             newSecondOperand /= 10;
         }
 
         int secondDashesCount = currentResultStr.length() + currentResultStr.length() / 2 + 1;
-        joiner.add(dashes(secondDashesCount));
+
+        joiner
+                .add(dashes(secondDashesCount))
+                .add(firstOperand * secondOperand + "\n");
 
         return joiner.toString();
     }
