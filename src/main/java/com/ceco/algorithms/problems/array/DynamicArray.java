@@ -1,4 +1,4 @@
-package com.ceco.algorithms.array;
+package com.ceco.algorithms.problems.array;
 
 import java.util.ArrayList;
 import java.util.List;

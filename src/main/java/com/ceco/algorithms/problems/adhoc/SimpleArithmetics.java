@@ -1,4 +1,4 @@
-package com.ceco.algorithms.adhoc;
+package com.ceco.algorithms.problems.adhoc;
 
 import java.util.Scanner;
 import java.util.StringJoiner;
