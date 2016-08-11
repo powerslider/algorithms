@@ -30,7 +30,7 @@ public class DynamicArray {
 
         List<List<Integer>> seqList = new ArrayList<>(numSeq);
         for (int i = 0; i < numSeq; i++) {
-            seqList.add(new ArrayList<Integer>());
+            seqList.add(new ArrayList<>());
         }
 
         int[][] queries = new int[numQueries][3];
