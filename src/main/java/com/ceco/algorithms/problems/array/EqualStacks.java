@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * @see <a href="https://www.hackerrank.com/challenges/equal-stacks">
- *          https://www.hackerrank.com/challenges/equal-stacks
+ *          Equal Stacks
  *     </a>
  *
  * Example input:

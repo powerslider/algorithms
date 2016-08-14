@@ -4,6 +4,10 @@ import java.util.Objects;
 import java.util.Scanner;
 
 /**
+ * @see <a href="https://www.hackerrank.com/challenges/arrays-ds">
+ *          Sparse Arrays
+ *     </a>
+ *
  * Example input:
  * 4
  * aba

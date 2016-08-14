@@ -3,6 +3,17 @@ package com.ceco.algorithms.problems.array;
 import java.util.Scanner;
 
 /**
+ * @see <a href="https://www.hackerrank.com/challenges/arrays-ds">
+ *          Arrays - DS
+ *     </a>
+ *
+ * Example input:
+ * 4
+ * 1 4 3 2
+ *
+ * Output:
+ * 2 3 4 1
+ *
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
  * @since 30-Jul-2016
  */

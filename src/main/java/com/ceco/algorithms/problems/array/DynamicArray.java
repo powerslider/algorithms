@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * @see <a href="https://www.hackerrank.com/challenges/arrays-ds">
+ *          Dynamic Array
+ *     </a>
+ *
  * Example input:
  * 2 5
  * 1 0 5

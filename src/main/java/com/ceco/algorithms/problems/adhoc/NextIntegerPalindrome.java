@@ -3,6 +3,10 @@ package com.ceco.algorithms.problems.adhoc;
 import java.util.Scanner;
 
 /**
+ * @see <a href="http://www.spoj.com/problems/PALIN/">
+ *          The Next Palindrome
+ *     </a>
+ *
  * Example input:
  * 2
  * 808

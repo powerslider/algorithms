@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  * @see <a href="http://www.spoj.com/problems/ARITH/">
- *          http://www.spoj.com/problems/ARITH/
+ *          Simple Arithmetics
  *      </a>
  *
  * Example input:

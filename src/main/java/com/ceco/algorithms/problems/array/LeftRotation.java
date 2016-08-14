@@ -3,6 +3,10 @@ package com.ceco.algorithms.problems.array;
 import java.util.Scanner;
 
 /**
+ * @see <a href="https://www.hackerrank.com/challenges/arrays-ds">
+ *          Left Rotation
+ *     </a>
+ *
  * Example input:
  * 5 4
  * 1 2 3 4 5

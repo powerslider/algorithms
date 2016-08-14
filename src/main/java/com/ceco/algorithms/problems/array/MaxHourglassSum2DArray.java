@@ -3,6 +3,10 @@ package com.ceco.algorithms.problems.array;
 import java.util.Scanner;
 
 /**
+ * @see <a href="https://www.hackerrank.com/challenges/arrays-ds">
+ *          2D Array - DS
+ *     </a>
+ *
  * Example input:
  * -1 -1 0 -9 -2 -2
  * -2 -1 -6 -8 -2 -5
