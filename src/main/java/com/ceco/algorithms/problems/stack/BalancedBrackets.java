@@ -1,11 +1,11 @@
-package com.ceco.algorithms.parse;
+package com.ceco.algorithms.problems.stack;
 
 import java.util.Scanner;
 import java.util.Stack;
 
 /**
  * @see <a href="https://www.hackerrank.com/challenges/balanced-brackets">
- *          https://www.hackerrank.com/challenges/balanced-brackets
+ *          Balanced Brackets
  *     </a>
  *
  * Example input:
