@@ -1,7 +1,8 @@
 package com.ceco.algorithms.problems.stack;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * @see <a href="https://www.hackerrank.com/challenges/simple-text-editor">
@@ -36,7 +37,7 @@ public class SimpleTextEditor {
         scanner.nextLine();
 
         String editorText = "";
-        Stack<String> stateStack = new Stack<>();
+        Deque<String> stateStack = new ArrayDeque<>();
 
         for (int i = 0; i < numQueries; i++) {
             String[] queryParts = scanner.nextLine().split("\\s");

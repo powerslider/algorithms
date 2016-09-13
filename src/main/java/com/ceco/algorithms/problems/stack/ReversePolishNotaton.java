@@ -1,9 +1,6 @@
 package com.ceco.algorithms.problems.stack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Example input:
@@ -46,14 +43,14 @@ public class ReversePolishNotaton {
             exprArr[i] = scanner.nextLine();
         }
 
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> stack = new ArrayDeque<>();
 
         for (String expr : exprArr) {
             System.out.println(postfix(stack, expr));
         }
     }
 
-    public static String postfix(Stack<Character> stack, String expr) {
+    public static String postfix(Deque<Character> stack, String expr) {
         char[] tokens = expr.toCharArray();
         StringBuilder output = new StringBuilder();
         for (Character token : tokens) {

@@ -1,7 +1,8 @@
 package com.ceco.algorithms.problems.stack;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * @see <a href="https://www.hackerrank.com/challenges/balanced-brackets">
@@ -48,7 +49,7 @@ public class BalancedBrackets {
     }
 
     private static boolean areBracketsBalanced(String expr) {
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> stack = new ArrayDeque<>();
         for (Character c : expr.toCharArray()) {
             if (c == '[' || c == '{' || c == '(')  {
                 stack.push(c);

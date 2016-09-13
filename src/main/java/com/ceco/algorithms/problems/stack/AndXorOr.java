@@ -1,7 +1,8 @@
 package com.ceco.algorithms.problems.stack;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * @see <a href="https://www.hackerrank.com/challenges/and-xor-or">
@@ -30,7 +31,7 @@ public class AndXorOr {
             arr[i] = scanner.nextInt();
         }
 
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         int maxResult = Integer.MIN_VALUE;
         for (int n1 : arr) {
             while (!stack.isEmpty()) {

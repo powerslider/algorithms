@@ -1,7 +1,8 @@
 package com.ceco.algorithms.problems.stack;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * Assume for convenience that we have the heights of the N rectangles in an array.
@@ -54,7 +55,7 @@ public class LargestRectangleInHistogram {
             barHeights[i] = scanner.nextInt();
         }
 
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         int maxArea = Integer.MIN_VALUE;
         int i;
 
@@ -77,7 +78,7 @@ public class LargestRectangleInHistogram {
         System.out.println(maxArea);
     }
 
-    private static int getMaxArea(int[] barHeights, Stack<Integer> stack, int maxArea, int i) {
+    private static int getMaxArea(int[] barHeights, Deque<Integer> stack, int maxArea, int i) {
         int area;
         int top = stack.pop();
 

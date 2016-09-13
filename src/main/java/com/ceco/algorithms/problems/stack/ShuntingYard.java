@@ -1,9 +1,10 @@
 package com.ceco.algorithms.problems.stack;
 
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 /**
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
@@ -21,10 +22,10 @@ public class ShuntingYard {
     }};
 
     private static void compute(String expr) {
-        Stack<Character> postfixStack = new Stack<>();
+        Deque<Character> postfixStack = new ArrayDeque<>();
         String reversePolishNotation = ReversePolishNotaton.postfix(postfixStack, expr);
-        Stack<Integer> values = new Stack<>();
-        Stack<Character> operators = new Stack<>();
+        Deque<Integer> values = new ArrayDeque<>();
+        Deque<Character> operators = new ArrayDeque<>();
 
          for (Character token : reversePolishNotation.toCharArray()) {
             if (OPS.containsKey(token)) {
