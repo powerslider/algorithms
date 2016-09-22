@@ -3,22 +3,21 @@ package com.ceco.algorithms.problems.queue;
 import java.util.*;
 
 /**
+ * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
  * @see <a href="https://www.hackerrank.com/challenges/castle-on-the-grid">
- *          Castle on the grid
- *     </a>
- *
- *
+ * Castle on the grid
+ * </a>
+ * <p>
+ * <p>
  * Example input:
  * 3
  * .X.
  * .X.
  * ...
  * 0 0 0 2
- *
+ * <p>
  * Output:
  * 3
- *
- * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
  * @since 18-Sep-2016
  */
 public class CastleOnTheGrid {
@@ -52,11 +51,7 @@ public class CastleOnTheGrid {
         }
 
         enum Direction {
-            START, NORTH, SOUTH, EAST, WEST;
-        }
-
-        Node(int x, int y) {
-            this(x, y, null, null);
+            START, NORTH, SOUTH, EAST, WEST, END;
         }
 
         Node(int x, int y, Direction direction, Node parent) {
@@ -67,10 +62,9 @@ public class CastleOnTheGrid {
         }
 
         boolean isNeighbour(Node node) {
-            if (neighbours != null) {
-                return neighbours.stream().anyMatch((n) -> n.equals(node));
-            }
-            return false;
+            boolean foundNeighbour = neighbours.stream()
+                    .anyMatch((n) -> n.equals(node));
+            return neighbours != null && foundNeighbour;
         }
     }
 
@@ -95,7 +89,7 @@ public class CastleOnTheGrid {
         int endY = scanner.nextInt();
 
         Node source = new Node(startX, startY, Node.Direction.START, null);
-        Node target = new Node(endX, endY);
+        Node target = new Node(endX, endY, Node.Direction.END, null);
 
         System.out.println(breadthFirstSearch(grid, source, target));
     }
@@ -108,45 +102,35 @@ public class CastleOnTheGrid {
         List<Node> visited = new ArrayList<>();
         visited.add(source);
 
-        int distance = 0;
-
         outer:
         while (!queue.isEmpty()) {
             Node current = queue.poll();
-
-            distance++;
 
             List<Node> neighbours = getNeighbours(current, grid);
             current.neighbours = neighbours;
             visited.add(current);
 
-            for (Node neighbour: neighbours) {
+            for (Node neighbour : neighbours) {
                 if (!visited.contains(neighbour)) {
-                    if (neighbour.equals(target)) {
-                        break outer;
-                    }
-
                     grid[neighbour.x][neighbour.y] = VISITED;
                     visited.add(neighbour);
-
                     queue.offer(neighbour);
+
+                    if (neighbour.equals(target)) {
+                        target = neighbour;
+                        break outer;
+                    }
                 }
             }
         }
 
         List<Node> shortestPathList = new ArrayList<>();
-        Node currentNode = source;
-
-        for (Node node : visited) {
-            Node parent = node.parent;
-            if (parent != null && parent.equals(currentNode)) {
-                System.out.println(node);
-                currentNode = node;
-                shortestPathList.add(node);
-//                if (node.equals(target)) break;
-            }
+        for (Node currentNode = target; currentNode.parent != null; currentNode = currentNode.parent) {
+            System.out.println(currentNode);
+            shortestPathList.add(currentNode);
         }
-        return distance;
+
+        return shortestPathList.size();
     }
 
     private static List<Node> getNeighbours(Node current, char[][] grid) {
