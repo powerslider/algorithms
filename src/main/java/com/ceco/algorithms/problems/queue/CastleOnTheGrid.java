@@ -30,7 +30,6 @@ public class CastleOnTheGrid {
         int y;
         Direction direction;
         Node parent;
-        List<Node> neighbours;
 
         enum Direction {
             START, NORTH, SOUTH, EAST, WEST, END;
@@ -98,12 +97,9 @@ public class CastleOnTheGrid {
         outer:
         while (!queue.isEmpty()) {
             Node current = queue.poll();
-
-            List<Node> neighbours = getNeighbours(current, grid);
-            current.neighbours = neighbours;
             visited.add(current);
 
-            for (Node neighbour : neighbours) {
+            for (Node neighbour : getNeighbours(current, grid)) {
                 if (!visited.contains(neighbour)) {
                     grid[neighbour.x][neighbour.y] = VISITED;
                     visited.add(neighbour);
