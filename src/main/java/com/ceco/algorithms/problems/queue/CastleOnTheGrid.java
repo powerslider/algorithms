@@ -32,24 +32,6 @@ public class CastleOnTheGrid {
         Node parent;
         List<Node> neighbours;
 
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    ", direction=" + direction +
-                    '}';
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Node node = (Node) o;
-            return x == node.x && y == node.y;
-        }
-
         enum Direction {
             START, NORTH, SOUTH, EAST, WEST, END;
         }
@@ -61,10 +43,19 @@ public class CastleOnTheGrid {
             this.parent = parent;
         }
 
-        boolean isNeighbour(Node node) {
-            boolean foundNeighbour = neighbours.stream()
-                    .anyMatch((n) -> n.equals(node));
-            return neighbours != null && foundNeighbour;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Node node = (Node) o;
+            return x == node.x && y == node.y;
+        }
+
+        @Override
+        public String toString() {
+            return String
+                    .format("Node{x=%s, y=%s, direction=%s}", x, y, direction);
         }
     }
 
@@ -91,10 +82,12 @@ public class CastleOnTheGrid {
         Node source = new Node(startX, startY, Node.Direction.START, null);
         Node target = new Node(endX, endY, Node.Direction.END, null);
 
-        System.out.println(breadthFirstSearch(grid, source, target));
+        Node targetWithParent = breadthFirstSearch(grid, source, target);
+        List<Node> shortestPath = findShortestPath(targetWithParent);
+        System.out.println(shortestPath.size());
     }
 
-    private static int breadthFirstSearch(char[][] grid, Node source, Node target) {
+    private static Node breadthFirstSearch(char[][] grid, Node source, Node target) {
         Queue<Node> queue = new ArrayDeque<>();
         queue.offer(source);
 
@@ -124,13 +117,22 @@ public class CastleOnTheGrid {
             }
         }
 
-        List<Node> shortestPathList = new ArrayList<>();
-        for (Node currentNode = target; currentNode.parent != null; currentNode = currentNode.parent) {
-            System.out.println(currentNode);
-            shortestPathList.add(currentNode);
-        }
+        return target;
+    }
 
-        return shortestPathList.size();
+    private static List<Node> findShortestPath(Node target) {
+        List<Node> shortestPathList = new ArrayList<>();
+        shortestPathList.add(target);
+        Node.Direction oldDir = target.direction;
+        for (Node currentNode = target; currentNode.parent != null; currentNode = currentNode.parent) {
+            if (currentNode.direction != oldDir) {
+                oldDir = currentNode.parent.direction;
+                shortestPathList.add(currentNode);
+            }
+            System.out.println(currentNode);
+
+        }
+        return shortestPathList;
     }
 
     private static List<Node> getNeighbours(Node current, char[][] grid) {
