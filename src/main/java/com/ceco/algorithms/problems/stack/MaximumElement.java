@@ -50,9 +50,9 @@ public class MaximumElement {
                     if (!maxStack.isEmpty()) {
                         // maintain a stack that is descendingly sorted
                         // if the top is less than the current input push it as the new top
-                        // else replicate the current top as a new pushed entry to maintain
-                        // same length on both stacks in order for the stack to keep the
-                        // current maximum even after a pop query on it
+                        // else replicate the current top as a new pushed entry to ensure
+                        // every query input element is pushed on to the stack in order for
+                        // the stack to keep the current maximum even after a pop query on it
                         if (maxStack.peek() < queryInput) {
                             maxStack.push(queryInput);
                         } else {
