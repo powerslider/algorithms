@@ -32,11 +32,21 @@ public class LeftRotation {
         }
 
         for (int i = 0; i < numRotations; i++) {
-            int currentElem = arr[0];
+            // get first element of array
+            int firstElem = arr[0];
+
+            // shift every array element to its previous index
             for (int j = 1; j < arr.length; j++) {
                 arr[j - 1] = arr[j];
             }
-            arr[arr.length - 1] = currentElem;
+            // more optimized for Java but less readable
+            //System.arraycopy(arr, 1, arr, 0, arr.length - 1);
+
+            // assign first element to last position
+            // first element will always be different
+            // at every next iteration due to shifting
+            // of the entire array
+            arr[arr.length - 1] = firstElem;
         }
 
         for (int elem : arr) {
