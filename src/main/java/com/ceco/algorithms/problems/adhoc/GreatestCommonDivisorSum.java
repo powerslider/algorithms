@@ -27,6 +27,18 @@ import java.util.Scanner;
  * 21
  * 16
  *
+ * Example input:
+ * 3
+ * 100003 54343 500000
+ * 3
+ * C 1 3
+ * U 2 43536
+ * C 1 3
+ *
+ * Output:
+ * 10563810
+ * 10785125
+ *
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
  * @since 27-Sep-2016
  */
@@ -71,7 +83,7 @@ public class GreatestCommonDivisorSum {
             sum += gcdSum(arr, lowerBoundIdx);
             lowerBoundIdx++;
         }
-        return sum % (10^9 + 7);
+        return sum;
     }
 
     private static int gcdSum(int[] arr, int arg) {
