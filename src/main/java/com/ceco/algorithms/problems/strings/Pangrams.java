@@ -5,6 +5,22 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
+ * @see <a href="https://www.hackerrank.com/challenges/pangrams">
+ *          Pangrams
+ *     </a>
+ *<p>
+ * Example input:
+ * We promptly judged antique ivory buckles for the next prize
+ *<p>
+ * Output:
+ * pangram
+ *<p>
+ * Example input:
+ * We promptly judged antique ivory buckles for the prize
+ *<p>
+ * Output:
+ * not pangram
+ *<p>
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
  * @since 02-Oct-2016
  */
