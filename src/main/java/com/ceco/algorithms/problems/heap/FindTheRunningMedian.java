@@ -57,9 +57,9 @@ public class FindTheRunningMedian {
 
         void insert(int item) {
             if (isEmpty() || item <= median()) {
-                maxHeap.add(item);
+                maxHeap.offer(item);
             } else {
-                minHeap.add(item);
+                minHeap.offer(item);
             }
             rebalance();
         }
@@ -82,9 +82,9 @@ public class FindTheRunningMedian {
             int heapSizeDiff = Math.abs(minHeap.size() - maxHeap.size());
             if (heapSizeDiff > 1) {
                 if (maxHeap.size() > minHeap.size()) {
-                    minHeap.add(maxHeap.poll());
+                    minHeap.offer(maxHeap.poll());
                 } else {
-                    maxHeap.add(minHeap.poll());
+                    maxHeap.offer(minHeap.poll());
                 }
             }
         }
