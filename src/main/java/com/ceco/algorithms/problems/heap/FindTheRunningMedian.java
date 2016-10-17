@@ -6,6 +6,10 @@ import java.util.Queue;
 import java.util.Scanner;
 
 /**
+ * @see <a href="https://www.hackerrank.com/challenges/find-the-running-median">
+ *          Find the running median
+ *     </a>
+ *<p>
  * Explanation:
  * <p>
  * Two heaps: one min-heap and one max-heap. Each heap contains about one half of the data. Every element in
