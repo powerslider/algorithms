@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * @see <a href="">
+ * @see <a href="https://www.hackerrank.com/challenges/maxsubarray">
  *          The Maximum Subarray
  *     </a>
  * <p>
