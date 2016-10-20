@@ -8,40 +8,60 @@ import java.util.*;
  */
 public class MinimumAverageWaitingTime {
 
+    private static class Customer {
+
+        long arrivalTime;
+        long cookingTime;
+        long totalTime;
+
+        Customer(long arrivalTime, long cookingTime) {
+            this.arrivalTime = arrivalTime;
+            this.cookingTime = cookingTime;
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int customerCount = scanner.nextInt();
         scanner.nextLine();
 
-        Queue<Map.Entry<Long, Long>> minHeap = new PriorityQueue<>(
+        Queue<Customer> customerHeap = new PriorityQueue<>(
                 (a, b) ->  {
-                    Long aValue = a.getValue();
-                    Long bValue = b.getValue();
-                    return aValue.compareTo(bValue) < 0 ? -1 : Objects.equals(aValue, bValue) ? 0 : 1;
+                    long aCooking = a.cookingTime;
+                    long bCooking = b.cookingTime;
+                    return aCooking < bCooking ? -1 : Objects.equals(aCooking, bCooking) ? 0 : 1;
                 });
 
+        Deque<Customer> allCustomers = new ArrayDeque<>();
 
         for (int i = 0; i < customerCount; i++) {
-            Map.Entry<Long, Long> entry = new AbstractMap.SimpleEntry<>(
-                    scanner.nextLong(), scanner.nextLong());
-            minHeap.offer(entry);
+            Customer customer = new Customer(scanner.nextLong(), scanner.nextLong());
+            customerHeap.offer(customer);
         }
 
-        long customerServiceAvg = 0;
-        long customerServiceAvgDelays = 0;
+        long totalTime = 0;
+        long waitingTime = 0;
+        long prevCustomersTotalTime = 0;
+        long prevCustomerCount = 0;
 
-        for (long i = 0; !minHeap.isEmpty(); i++) {
-            Map.Entry<Long, Long> entry = minHeap.poll();
-            Long arrivalTime = entry.getKey();
-            Long cookTime = entry.getValue();
+        for (long i = 0; !customerHeap.isEmpty(); i++) {
+            Customer customer = customerHeap.poll();
+            long currentArrivalTime = customer.arrivalTime;
+            long currentCookingTime = customer.cookingTime;
             if (i > 0) {
-                customerServiceAvgDelays += Math.abs(customerServiceAvg - (arrivalTime * i));
-                customerServiceAvg += cookTime + customerServiceAvgDelays;
+                while (!allCustomers.isEmpty()) {
+                    prevCustomersTotalTime += allCustomers.pop().totalTime;
+                    prevCustomerCount++;
+                }
+                waitingTime = prevCustomersTotalTime - (currentArrivalTime * prevCustomerCount);
+                customer.totalTime = currentCookingTime + waitingTime;
             } else {
-                customerServiceAvg += cookTime;
+                customer.totalTime = currentCookingTime;
             }
+            totalTime += customer.totalTime;
+            allCustomers.push(customer);
         }
 
-        System.out.println(customerServiceAvg / customerCount);
+        System.out.println(totalTime / customerCount);
     }
 }
