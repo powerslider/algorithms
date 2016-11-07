@@ -3,6 +3,19 @@ package com.ceco.algorithms.problems.array;
 import java.util.Scanner;
 
 /**
+ * @see <a href="https://www.hackerrank.com/contests/ncr-codesprint/challenges/spiral-message">
+ *          Spiral Message
+ *     </a>
+ * <p>
+ * Example input:
+ * 3 5
+ * a##ar
+ * a#aa#
+ * xxwsr
+ * <p>
+ * Output:
+ * 4
+ * <p>
  * @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
  * @since 06-Nov-2016
  */
@@ -26,7 +39,7 @@ public class SpiralMessage {
     }
 
     private static int decodeMessage(char[][] mat) {
-        int wordCount = 0;
+        StringBuilder message = new StringBuilder();
 
         int startRow = 0;
         int endRow = mat.length - 1;
@@ -37,47 +50,35 @@ public class SpiralMessage {
             if (startCol < endCol) {
                 // bottom -> top
                 for (int row = endRow; row >= startRow; row--) {
-                    System.out.print(mat[row][startCol]);
-                    if (mat[row][startCol] == '#' && mat[row + 1][startCol] != '#') {
-                        wordCount++;
-                    }
+                    message.append(mat[row][startCol]);
                 }
                 startCol++;
             }
 
             // left -> right
             for (int col = startCol; col <= endCol; col++) {
-                System.out.print(mat[startRow][col]);
-                if (mat[startRow][col] == '#' && mat[startRow][col - 1] != '#') {
-                    wordCount++;
-                }
+                message.append(mat[startRow][col]);
             }
             startRow++;
 
             // top -> bottom
             for (int row = startRow; row <= endRow; row++) {
-                System.out.print(mat[row][endCol]);
-                if (mat[row][endCol] == '#' && mat[row - 1][endCol] != '#') {
-                    wordCount++;
-                }
+                message.append(mat[row][endCol]);
             }
             endCol--;
 
             if (startRow < endRow) {
                 // right -> left
                 for (int col = endCol; col >= startCol; col--) {
-                    System.out.print(mat[endRow][col]);
-                    if (mat[endRow][col] == '#' && mat[endRow][col + 1] != '#') {
-                        wordCount++;
-                    }
+                    message.append(mat[endRow][col]);
                 }
                 endRow--;
             }
         }
-//        xaa##ar#rswx#aa
-//        xaa##ar#rswxx
-//        xaa##ar#rswxx#aaa#
-        return wordCount;
 
+        String msg = message.toString();
+        if (msg.isEmpty()) return 0;
+
+        return msg.split("\\#+").length;
     }
 }
