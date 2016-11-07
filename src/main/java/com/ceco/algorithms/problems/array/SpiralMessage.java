@@ -34,15 +34,16 @@ public class SpiralMessage {
         int endCol = mat[endRow].length - 1;
 
         while (startRow <= endRow && startCol <= endCol) {
-            // bottom -> top
-            for (int row = endRow; row >= startRow; row--) {
-                System.out.print(mat[row][startCol]);
-                if (mat[row][startCol] == '#' && mat[row + 1][startCol] != '#') {
-                    wordCount++;
+            if (startCol < endCol) {
+                // bottom -> top
+                for (int row = endRow; row >= startRow; row--) {
+                    System.out.print(mat[row][startCol]);
+                    if (mat[row][startCol] == '#' && mat[row + 1][startCol] != '#') {
+                        wordCount++;
+                    }
                 }
+                startCol++;
             }
-            startCol++;
-            System.out.println();
 
             // left -> right
             for (int col = startCol; col <= endCol; col++) {
@@ -52,7 +53,6 @@ public class SpiralMessage {
                 }
             }
             startRow++;
-            System.out.println();
 
             // top -> bottom
             for (int row = startRow; row <= endRow; row++) {
@@ -62,17 +62,17 @@ public class SpiralMessage {
                 }
             }
             endCol--;
-            System.out.println();
 
-            // right -> left
-            for (int col = endCol; col >= startCol; col--) {
-                System.out.print(mat[endRow][col]);
-                if (mat[endRow][col] == '#' && mat[endRow][col + 1] != '#') {
-                    wordCount++;
+            if (startRow < endRow) {
+                // right -> left
+                for (int col = endCol; col >= startCol; col--) {
+                    System.out.print(mat[endRow][col]);
+                    if (mat[endRow][col] == '#' && mat[endRow][col + 1] != '#') {
+                        wordCount++;
+                    }
                 }
+                endRow--;
             }
-            System.out.println();
-            endRow--;
         }
 //        xaa##ar#rswx#aa
 //        xaa##ar#rswxx
