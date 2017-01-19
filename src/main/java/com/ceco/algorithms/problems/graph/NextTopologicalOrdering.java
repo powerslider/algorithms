@@ -36,6 +36,7 @@ public class NextTopologicalOrdering {
 
         int name;
         List<Node> edges;
+        boolean isVisited;
 
         Node(int name) {
             this.name = name;
@@ -44,6 +45,10 @@ public class NextTopologicalOrdering {
 
         public void addEdge(Node edge) {
             this.edges.add(edge);
+        }
+
+        public void setVisited(boolean isVisited) {
+            this.isVisited = isVisited;
         }
     }
 
@@ -71,5 +76,7 @@ public class NextTopologicalOrdering {
                 leftNode.addEdge(new Node(right));
             }
         }
+
+        
     }
 }
