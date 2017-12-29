@@ -64,7 +64,7 @@ public class UnitsConverter {
 
 		int metreOrder = UNIT_ORDER.get("m");
 		Integer outputUnitOrder = UNIT_ORDER.get(outputUnit);
-		boolean notSameOrder = outputUnitOrder > metreOrder || outputUnitOrder < metreOrder;
+		boolean notSameOrder = outputUnitOrder != metreOrder;
 
 		double resultInMetres = convertUnits(input, inputUnit);
 		double result = convertUnits(resultInMetres, outputUnit, notSameOrder);
